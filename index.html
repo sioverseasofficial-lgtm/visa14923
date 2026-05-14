@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa Generator</title>
+    <!-- Google Fonts for English and Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Editor View -->
+        <div id="editor-view" class="view-section active">
+            <header class="editor-header">
+                <h1>Visa Generator Studio</h1>
+                <p>Fill in the details to generate a secure, shareable Visa document.</p>
+            </header>
+            
+            <form id="visa-form" class="modern-form">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Applicant Photo</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="photo-upload" accept="image/*" required>
+                            <div class="file-upload-design">
+                                <span class="upload-icon">📷</span>
+                                <span class="upload-text">Click or drag image to upload</span>
+                            </div>
+                        </div>
+                        <img id="photo-preview" class="photo-preview hidden" alt="Preview">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Visa No.</label>
+                        <input type="text" id="in-visa-no" value="6166124854" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Religion</label>
+                        <input type="text" id="in-religion" value="Islam - الاسلام" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Passport Expiry Date</label>
+                        <input type="text" id="in-passport-exp" value="20/02/2033" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Issue</label>
+                        <input type="text" id="in-issue-date" value="07/05/2026" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Valid until</label>
+                        <input type="text" id="in-valid-until" value="05/08/2026" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Nationality</label>
+                        <input type="text" id="in-nationality" value="Bangladesh - بنجلاديش" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Date of Birth</label>
+                        <input type="text" id="in-dob" value="02/01/2005" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Sex</label>
+                        <input type="text" id="in-sex" value="Male - ذكر" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>MRZ Line 1</label>
+                        <input type="text" id="in-mrz-1" value="1<BGDAHMED<<MD<TUHIN<<<<<<<<<<<<<<<<<<<<<<<" required class="mono-input">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>MRZ Line 2</label>
+                        <input type="text" id="in-mrz-2" value="A070675580BGD0201200541200220334<<<<<<<<<05" required class="mono-input">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Generate Visa & QR Code</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Generated Result View -->
+        <div id="result-view" class="view-section hidden">
+            <div class="result-actions">
+                <button id="btn-edit" class="btn-secondary">← Back to Edit</button>
+                <button id="btn-print" class="btn-primary">Print / Save as PDF</button>
+            </div>
+            
+            <div class="canvas-container">
+                <!-- The Visa Card -->
+                <div class="visa-card" id="visa-card">
+                    <!-- Header with Logo -->
+                    <div class="visa-header">
+                        <img src="logo.png" alt="Visa Header Logo" class="visa-logo">
+                    </div>
+                    
+                    <!-- Main Body -->
+                    <div class="visa-body">
+                        <!-- Photo Column -->
+                        <div class="visa-photo-col">
+                            <img id="out-photo" src="" alt="Applicant Photo">
+                        </div>
+                        
+                        <!-- Details Column -->
+                        <div class="visa-details-col">
+                            <div class="visa-field">
+                                <div class="field-labels">
+                                    <span class="label-en">Visa No.</span>
+                                    <span class="label-ar">رقم التأشيرة</span>
+                                </div>
+                                <div class="field-value" id="out-visa-no"></div>
+                            </div>
+
+                            <div class="visa-field">
+                                <div class="field-labels">
+                                    <span class="label-en">Religion</span>
+                                    <span class="label-ar">الديانة</span>
+                                </div>
+                                <div class="field-value" id="out-religion"></div>
+                            </div>
+
+                            <div class="visa-field">
+                                <div class="field-labels">
+                                    <span class="label-en">Passport Expiry Date</span>
+                                    <span class="label-ar">تاريخ انتهاء الجواز</span>
+                                </div>
+                                <div class="field-value" id="out-passport-exp"></div>
+                            </div>
+
+                            <div class="visa-field">
+                                <div class="field-labels">
+                                    <span class="label-en">Date of Issue</span>
+                                    <span class="label-ar">صالحة اعتبارا من</span>
+                                </div>
+                                <div class="field-value" id="out-issue-date"></div>
+                            </div>
+
+                            <div class="visa-field">
+                                <div class="field-labels">
+                                    <span class="label-en">Valid until</span>
+                                    <span class="label-ar">صالحة لغاية</span>
+                                </div>
+                                <div class="field-value" id="out-valid-until"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Width Rows (Below photo) -->
+                    <div class="visa-full-rows">
+                        <div class="visa-field">
+                            <div class="field-labels">
+                                <span class="label-en">Nationality</span>
+                                <span class="label-ar">الجنسية</span>
+                            </div>
+                            <div class="field-value" id="out-nationality"></div>
+                        </div>
+
+                        <div class="visa-field">
+                            <div class="field-labels">
+                                <span class="label-en">Date of Birth</span>
+                                <span class="label-ar">تاريخ الميلاد</span>
+                            </div>
+                            <div class="field-value" id="out-dob"></div>
+                        </div>
+
+                        <div class="visa-field">
+                            <div class="field-labels">
+                                <span class="label-en">Sex</span>
+                                <span class="label-ar">الجنس</span>
+                            </div>
+                            <div class="field-value" id="out-sex"></div>
+                        </div>
+                    </div>
+
+                    <!-- MRZ Code -->
+                    <div class="visa-mrz">
+                        <div id="out-mrz-1"></div>
+                        <div id="out-mrz-2"></div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="visa-footer">
+                        سارية - Valid
+                    </div>
+                </div>
+
+                <!-- QR Code Display -->
+                <div class="qr-container">
+                    <h3>Scan to View</h3>
+                    <div id="qrcode"></div>
+                    <div class="share-url">
+                        <input type="text" id="share-url-input" readonly>
+                        <button id="btn-copy">Copy URL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

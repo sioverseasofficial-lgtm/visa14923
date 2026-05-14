@@ -1,0 +1,421 @@
+/* Base CSS & Resets */
+:root {
+    --primary: #0F6B59;
+    --primary-hover: #0a4f41;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-color: #e0e0e0;
+    --input-bg: #f9fafb;
+    --visa-bg: #ffffff;
+    --visa-field-bg: #EAEAEA;
+    --visa-footer-bg: #dcf2e3;
+    --visa-text: #222222;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Cairo', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Typography Utility */
+.mono-input {
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+}
+
+/* App Container */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Views */
+.view-section {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Editor Styling */
+.editor-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.editor-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.modern-form {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"] {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--input-bg);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 107, 89, 0.1);
+}
+
+/* File Upload Customization */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    border: 2px dashed var(--primary);
+    border-radius: 12px;
+    background: #f0fdf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.file-upload-wrapper:hover {
+    background: #dcfce7;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-design {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--primary);
+}
+
+.upload-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.photo-preview {
+    margin-top: 1rem;
+    max-width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.photo-preview.hidden {
+    display: none;
+}
+
+/* Buttons */
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 107, 89, 0.2);
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+}
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Result View & Canvas Container */
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+/* --------------------------------------
+   Visa Card UI - Exact Match
+   -------------------------------------- */
+.visa-card {
+    background: var(--visa-bg);
+    width: 800px; /* fixed width for exact aspect ratio matching */
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    overflow: hidden;
+    padding: 0;
+    font-family: 'Inter', 'Cairo', sans-serif;
+    color: var(--visa-text);
+    border: 1px solid #e0e0e0;
+}
+
+.visa-header {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visa-logo {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    object-fit: contain;
+}
+
+.visa-body {
+    display: flex;
+    padding: 0 2.5rem;
+    gap: 2rem;
+}
+
+.visa-photo-col {
+    width: 200px;
+    flex-shrink: 0;
+}
+
+.visa-photo-col img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border: 2px solid #0f6b59; /* Green border on the photo */
+}
+
+.visa-details-col {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.visa-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.field-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    margin-bottom: 0.2rem;
+    padding: 0 5px;
+}
+
+.label-en {
+    font-weight: 500;
+}
+.label-ar {
+    font-weight: 600;
+    direction: rtl;
+}
+
+.field-value {
+    background-color: var(--visa-field-bg);
+    text-align: center;
+    padding: 6px 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid #ccc; /* slight border to match image */
+}
+
+.visa-full-rows {
+    padding: 1rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.visa-mrz {
+    padding: 1.5rem 2.5rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    word-break: break-all;
+    font-weight: 600;
+}
+
+.visa-footer {
+    background-color: var(--visa-footer-bg);
+    color: var(--primary);
+    text-align: center;
+    padding: 0.8rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(15, 107, 89, 0.2);
+}
+
+/* QR Code Section */
+.qr-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-container h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+#qrcode {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.share-url {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    gap: 0.5rem;
+}
+
+.share-url input {
+    flex-grow: 1;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.share-url button {
+    padding: 0.6rem 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    .app-container {
+        padding: 0;
+    }
+    .result-actions, .qr-container, .view-section:not(.active) {
+        display: none !important;
+    }
+    .visa-card {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    .visa-card {
+        width: 100%;
+        min-width: 600px;
+    }
+    .canvas-container {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        align-items: flex-start;
+    }
+}
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
